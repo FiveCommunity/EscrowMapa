@@ -1,191 +1,195 @@
-# **Escrow Map Decryptor - Modo Híbrido**
+# 🚀 FiveM Escrow Decryptor - Sistema Automático v2.0
 
-Este projeto agora funciona em **MODO HÍBRIDO** - tanto **SEM DEPENDÊNCIA** da chave CFX (usando grants locais) quanto **COM CHAVE CFX** para quebrar e obter grants adicionais!
+## 📋 Descrição
 
-## **✨ NOVA FUNCIONALIDADE: Modo Híbrido Local + CFX**
+O **FiveM Escrow Decryptor** é uma ferramenta avançada desenvolvida para decriptar arquivos protegidos pelo sistema de escrow da FiveM. Este sistema automatiza todo o processo de decriptação, desde a validação de chaves de servidor até a extração completa dos recursos protegidos.
 
-O sistema agora **combina o melhor dos dois mundos**:
-- ✅ **Modo Local**: Usa grants do arquivo `Grants.txt` (funciona offline)
-- ✅ **Modo CFX**: Conecta com servidor para obter grants adicionais
-- ✅ **Modo Híbrido**: Combina ambos automaticamente
+## ✨ Características Principais
 
-## **🚀 Como Funciona Agora:**
+- 🔐 **Validação Automática de Chaves**: Verifica automaticamente a validade das Server Keys da FiveM
+- 🚀 **Decriptação em Lote**: Processa múltiplos arquivos simultaneamente
+- 📊 **Interface Visual**: Interface colorida e intuitiva com barras de progresso
+- 💾 **Sistema de Cache**: Armazena chaves para otimizar o processo
+- 🎯 **Suporte a Múltiplos Recursos**: Processa todos os recursos disponíveis na Server Key
+- 🔄 **Processamento Paralelo**: Utiliza threads para melhor performance
+- 📁 **Organização Automática**: Cria estrutura de pastas organizada
 
-### **Modo Local (Padrão):**
-1. **Coloque seus mapas** na pasta `./assets`
-2. **Execute escaneamento automático** - usa apenas grants locais
-3. **Sistema detecta e descriptografa** automaticamente
+## 🛠️ Requisitos do Sistema
 
-### **Modo CFX (Com Chave):**
-1. **Coloque seus mapas** na pasta `./assets`
-2. **Execute com chave CFX** - obtém grants do servidor
-3. **Sistema quebra e descriptografa** tudo
+- **Python 3.7+** instalado no sistema
+- **Windows 10/11** (testado e otimizado)
+- **Conexão com a internet** para validação de chaves
+- **Server Key válida** da FiveM
 
-### **Modo Híbrido (Recomendado):**
-1. **Coloque seus mapas** na pasta `./assets`
-2. **Execute com chave CFX** - combina local + servidor
-3. **Sistema usa grants locais + obtém extras do CFX**
+## 📦 Dependências
 
-## **Requisitos:**
-Python: 3.1x
-Instale as dependências: `pip install requests colorama pycryptodome`
+O sistema requer as seguintes bibliotecas Python:
 
-## **🚀 Comandos Principais:**
+- `requests` - Para comunicação HTTP com a API da FiveM
+- `colorama` - Para interface colorida no terminal
+- `pycryptodome` - Para algoritmos de criptografia
+- `tqdm` - Para barras de progresso
 
-### **Modo Local (Sem CFX):**
+## 🚀 Instalação
+
+### Método 1: Instalador Automático (Recomendado)
+
+1. Execute o arquivo `instalador.bat` como administrador
+2. Aguarde a instalação automática das dependências
+3. Pronto! Todas as dependências serão instaladas automaticamente
+
+### Método 2: Instalação Manual
+
 ```bash
-# Escaneamento automático apenas com grants locais
-python escrow.py --auto-scan
-
-# Script automático local
-python auto.py
+pip install requests colorama pycryptodome tqdm
 ```
 
-### **Modo CFX (Com Chave):**
-```bash
-# Escaneamento automático com chave CFX
-python escrow.py --auto-scan -k cfxk_SUA_CHAVE_AQUI
+## 📁 Estrutura do Projeto
 
-# Script automático com chave CFX
-python auto.py cfxk_SUA_CHAVE_AQUI
+```
+Five Escrow/
+├── auto.py              # Script principal de automação
+├── escrow.py            # Core do sistema de decriptação
+├── watermark.py         # Sistema de marca d'água
+├── instalador.bat       # Instalador automático
+├── grant_cache.json     # Cache de chaves
+├── assets/              # Pasta com recursos para decriptar
+│   └── ZonaMods_baseEB_v1_Att2/
+│       ├── fxmanifest.lua
+│       └── stream/
+└── out/                 # Pasta de saída dos arquivos decriptados
 ```
 
-### **Modo Híbrido (Recomendado):**
-```bash
-# Combina grants locais + CFX automaticamente
-python escrow.py --auto-scan -k cfxk_SUA_CHAVE_AQUI
+## 🎯 Como Usar
 
-# Ou use o script automático
-python auto.py cfxk_SUA_CHAVE_AQUI
-```
+### 1. Preparação
 
-### **Gerenciamento de Grants:**
+1. **Coloque seus recursos protegidos** na pasta `assets/`
+2. **Certifique-se de ter uma Server Key válida** da FiveM
+3. **Execute o instalador** se for a primeira vez
 
-#### **Adicionar um Grant:**
-```bash
-python escrow.py --add-grant [RESOURCE_ID] [GRANT_KEY]
-```
+### 2. Execução
 
-#### **Remover um Grant:**
-```bash
-python escrow.py --remove-grant [RESOURCE_ID]
-```
-
-#### **Visualizar Grants Existentes:**
-```bash
-python escrow.py -s
-```
-
-#### **Importar Grants Locais:**
-```bash
-python escrow.py --import-grants
-```
-
-### **Descriptografia Manual:**
-
-#### **Descriptografar um Diretório:**
-```bash
-python escrow.py -d [CAMINHO_DO_MAPA]
-```
-
-#### **Descriptografar um Arquivo:**
-```bash
-python escrow.py -f [CAMINHO_DO_ARQUIVO]
-```
-
-## **📁 Estrutura de Pastas:**
-```
-escrow-map-decryptor/
-├── assets/              # Coloque seus mapas aqui
-│   ├── mapa1/
-│   │   └── .fxap       # Arquivo principal do mapa
-│   ├── mapa2/
-│   │   └── .fxap
-│   └── Grants.txt      # Grants locais (JWT)
-├── out/                 # Arquivos descriptografados
-├── grant_cache.json     # Cache de grants (local + CFX)
-└── escrow.py            # Script principal
-```
-
-## **💡 Exemplo de grant_cache.json:**
-```json
-{
-  "12345": "abcdef1234567890abcdef1234567890abcdef12",
-  "67890": "fedcba0987654321fedcba0987654321fedcba09"
-}
-```
-
-## **🔄 Fluxo de Trabalho Recomendado:**
-
-### **Opção 1: Modo Híbrido (RECOMENDADO)**
-1. **Coloque mapas** na pasta `assets/`
-2. **Execute com chave CFX:**
-   ```bash
-   python escrow.py --auto-scan -k cfxk_SUA_CHAVE_AQUI
-   ```
-3. **Sistema combina automaticamente:**
-   - ✅ Grants locais do `Grants.txt`
-   - ✅ Grants adicionais do CFX
-   - ✅ Descriptografa tudo
-
-### **Opção 2: Modo Local (Offline)**
-1. **Coloque mapas** na pasta `assets/`
-2. **Execute modo local:**
-   ```bash
-   python escrow.py --auto-scan
-   ```
-3. **Sistema usa apenas grants locais**
-
-### **Opção 3: Modo CFX (Online)**
-1. **Coloque mapas** na pasta `assets/`
-2. **Execute modo CFX:**
-   ```bash
-   python escrow.py --auto-scan -k cfxk_SUA_CHAVE_AQUI
-   ```
-3. **Sistema obtém grants do servidor**
-
-## **✅ Vantagens do Modo Híbrido:**
-- ✅ **Sem dependência da CFX** (modo local)
-- ✅ **Funciona offline** (grants locais)
-- ✅ **Quebra com chave CFX** (modo servidor)
-- ✅ **Combina ambos automaticamente**
-- ✅ **Controle total sobre grants**
-- ✅ **Mais rápido e confiável**
-- ✅ **Sem limites de API** (modo local)
-- ✅ **🆕 Detecção automática de recursos**
-- ✅ **🆕 Escaneamento inteligente da pasta assets**
-- ✅ **🆕 Modo híbrido local + CFX**
-
-## **🔍 Como o Sistema Híbrido Funciona:**
-
-1. **Detecta** todos os arquivos `.fxap` na pasta `assets/`
-2. **Importa grants locais** do arquivo `Grants.txt`
-3. **Se tiver chave CFX**, conecta com servidor para grants adicionais
-4. **Combina todos os grants** (local + CFX)
-5. **Verifica** se existem grants para cada recurso
-6. **Descriptografa automaticamente** os recursos com grants
-7. **Lista** os recursos que precisam de grants
-8. **Guia** você para adicionar grants faltantes
-
-## **🎯 Exemplos de Uso:**
-
-### **Modo Local (Offline):**
 ```bash
 python auto.py
 ```
 
-### **Modo CFX (Online):**
-```bash
-python auto.py cfxk_1Gqh4rzXDTC2Q7esH4qaX_4E0TpE
-```
+### 3. Processo Automático
 
-### **Modo Híbrido (Recomendado):**
-```bash
-python escrow.py --auto-scan -k cfxk_1Gqh4rzXDTC2Q7esH4qaX_4E0TpE
-```
+1. **Validação da Server Key**: O sistema verifica se sua chave é válida
+2. **Carregamento de Chaves**: Baixa automaticamente todas as chaves necessárias
+3. **Decriptação**: Processa todos os arquivos protegidos
+4. **Organização**: Cria estrutura de pastas na pasta `out/`
 
-## **Nota:**
-- **Modo Local**: Funciona offline, usa apenas grants do `Grants.txt`
-- **Modo CFX**: Funciona online, obtém grants do servidor
-- **Modo Híbrido**: Combina ambos para máxima compatibilidade
-- Os grants locais têm prioridade sobre os do CFX
+## 🔧 Scripts Disponíveis
+
+### `auto.py` - Script Principal
+- **Função**: Automação completa do processo de decriptação
+- **Recursos**: Interface visual, validação automática, processamento em lote
+- **Uso**: `python auto.py`
+
+### `escrow.py` - Core do Sistema
+- **Função**: Decriptação individual de arquivos
+- **Recursos**: Algoritmo ChaCha20, cache de chaves, validação JWT
+- **Uso**: `python escrow.py -s -k <server_key>`
+
+### `watermark.py` - Sistema de Marca d'Água
+- **Função**: Adiciona marca d'água em todas as pastas
+- **Recursos**: Processamento recursivo, personalização de conteúdo
+- **Uso**: `python watermark.py -d <diretório>`
+
+## 🔐 Algoritmo de Criptografia
+
+O sistema utiliza o algoritmo **ChaCha20** para decriptação, implementado com a biblioteca `pycryptodome`. Este algoritmo oferece:
+
+- **Alta Performance**: Decriptação rápida e eficiente
+- **Segurança**: Algoritmo criptográfico robusto
+- **Compatibilidade**: Totalmente compatível com o sistema FiveM
+
+## 📊 Sistema de Cache
+
+O `grant_cache.json` armazena:
+- **Chaves de recursos** já processados
+- **Tokens de acesso** para otimização
+- **Metadados** de validação
+
+## 🎨 Interface Visual
+
+- **Cores**: Sistema de cores intuitivo para diferentes tipos de mensagens
+- **Barras de Progresso**: Acompanhamento visual do processo
+- **Banner**: Interface profissional e atrativa
+- **Status em Tempo Real**: Informações sobre cada etapa do processo
+
+## ⚠️ Limitações e Considerações
+
+- **Server Key Válida**: É obrigatório ter uma Server Key ativa da FiveM
+- **Recursos Protegidos**: Só funciona com recursos que você possui licença
+- **Conexão Internet**: Requer conexão para validação de chaves
+- **Permissões**: Pode requerer execução como administrador
+
+## 🆘 Solução de Problemas
+
+### Erro: "Python não encontrado"
+- **Solução**: Instale o Python 3.7+ e adicione ao PATH
+
+### Erro: "Dependências não encontradas"
+- **Solução**: Execute `instalador.bat` como administrador
+
+### Erro: "Server Key inválida"
+- **Solução**: Verifique se sua Server Key está ativa e correta
+
+### Erro: "Permissão negada"
+- **Solução**: Execute como administrador
+
+## 🔄 Atualizações
+
+### v2.0 - Atualização Principal
+- ✅ Interface visual completamente reformulada
+- ✅ Sistema de cache otimizado
+- ✅ Processamento paralelo implementado
+- ✅ Validação automática de chaves
+- ✅ Sistema de marca d'água integrado
+
+## 📞 Suporte
+
+- **Discord**: discord.gg/fivecommunity
+- **Comunidade**: Five Community
+- **Versão**: 2.0
+
+## 📄 Licença
+
+Este projeto é desenvolvido pela **Five Community** e está destinado ao uso legítimo de recursos FiveM com licenças válidas.
+
+## 🙏 Créditos
+
+### Desenvolvimento
+- **Five Community** - Desenvolvimento principal
+- **Equipe de Desenvolvedores** - Implementação e testes
+
+### Bibliotecas Utilizadas
+- **requests** - Comunicação HTTP
+- **colorama** - Interface colorida
+- **pycryptodome** - Criptografia
+- **tqdm** - Barras de progresso
+
+### Agradecimentos
+- **FiveM Team** - Plataforma e sistema de escrow
+- **Comunidade FiveM** - Feedback e suporte
+- **Contribuidores** - Testes e melhorias
+
+---
+
+## 🚀 Começando Agora
+
+1. **Clone ou baixe** este projeto
+2. **Execute** `instalador.bat` como administrador
+3. **Coloque** seus recursos na pasta `assets/`
+4. **Execute** `python auto.py`
+5. **Aguarde** a decriptação automática
+6. **Aproveite** seus recursos decriptados!
+
+---
+
+**⚠️ IMPORTANTE**: Este sistema é destinado apenas para uso legítimo de recursos FiveM com licenças válidas. Respeite sempre os direitos autorais e termos de uso.
+
+**🎯 Dica**: Para melhor performance, mantenha sua Server Key atualizada e execute o sistema em um ambiente com boa conexão à internet.
